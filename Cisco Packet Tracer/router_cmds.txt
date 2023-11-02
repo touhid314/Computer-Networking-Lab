@@ -1,0 +1,60 @@
+STANDARD ACT ---------------------(configure near dest)
+Numbered Standard ACL: 1 – 99 and 1300 – 1999
+CREATE ACCESS LIST:
+en
+conf t
+access-list 2 remark ACL TO DENY ACCESS FROM SALES VLAN
+access-list 2 deny host 192.168.1.77
+access-list 2 permit 10.1.0.0 0.0.255.255
+access-list 2 deny 10.0.0.0 0.255.255.255
+access-list 2 permit any
+
+
+ENABLE THE ACCESSS LIST FOR AN INTERFACE:
+conf t
+int fa0/1
+ip access-group 2 out
+
+
+VIEW THE ACCESS LISTS:
+show access-lists
+do show acess-lists	! in conf mode
+
+EDIT AN ACCESS LIST:
+ip access-list standard 99
+5 deny 1.1.1.1	! inserts a statement with sequence 5
+no 20	! Deletes the statement of sequence number 20
+
+DELETE AN ACCESS LIST:
+int fa0/0	! enter the interface
+no ip access-group 2
+exit
+
+
+
+EXTENDED ACT -----------------------(try to configure near src)
+Numbered Extended ACL: 100 – 199 and 2000 – 2699
+
+CREATE ACCESS LIST:
+access-list 101 remark MY_ACCESS_LIST
+access-list 101 deny ip host 10.1.1.1 host 10.2.2.2
+access-list 101 deny tcp 10.1.1.0 0.0.0.255 any eq 23
+access-list 101 deny icmp 10.1.1.1 0.0.0.0 any
+access-list 101 deny tcp host 10.1.1.0 host 10.0.0.1 eq 80
+access-list 101 deny udp host 10.1.1.7 any eq 53
+access-list 101 permit ip any any
+
+ENABLE THE ACCESSS LIST FOR AN INTERFACE:
+conf t
+int fa0/1
+ip access-group 101 out
+
+
+CREATING NAMED LIST:
+en
+conf t
+ip access-list extended MY_EXTENDED_ACL
+deny tcp host 10.1.1.0 host 10.0.0.1 eq 80
+exit
+
+ip access-group MY_EXTENDED_ACL in

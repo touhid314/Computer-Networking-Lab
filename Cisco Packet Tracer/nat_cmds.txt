@@ -1,0 +1,18 @@
+en
+conf t
+access list 1 permit 192.168.44.0 0.0.0255
+ip nat pool NAT-POOL 177.77.77.3 177.77.77.7 netmask 255.255.0.0
+ip nat inside source list 1 pool NAT-POOL overload	! use overload for PAT, don't use it for NAT
+
+! ENABLING
+int fa0/0
+ip nat inside
+exit
+int fa1/0
+ip nat outside
+exit
+
+
+! COMMANDS
+show ip nat translations
+clear ip nat translation * 	! DELETE NAT 

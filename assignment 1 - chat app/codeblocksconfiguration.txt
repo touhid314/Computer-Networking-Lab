@@ -1,0 +1,6 @@
+To enable codeblocks to use the "libws2_32.a" socket programming library, complete the following steps:
+
+1. Go to Settings>>Compiler>>Linker Settings
+2. Click "Add"
+3. Type "libws2_32.a" (without quotes) in File-name field (Or browse and select the "libws2_32.a" file)
+4. Click "OK"
